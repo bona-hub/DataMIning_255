@@ -1,0 +1,42 @@
+import numpy as np
+from scipy.linalg import svd, eigh
+
+# Define the matrix M
+M = np.array([
+    [1, 2],
+    [2, 1],
+    [3, 4],
+    [4, 3]
+])
+
+# 1. Perform SVD decomposition
+U, Sigma, VT = svd(M)
+
+print("SVD Results:")
+print("U:\n", U)
+print("Sigma (Singular Values):\n", Sigma)
+print("V^T:\n", VT)
+
+# 2. Compute eigenvalue decomposition of M^T M
+MTM = M.T @ M
+eigenvalues, eigenvectors = eigh(MTM)
+
+# Sort eigenvalues and eigenvectors in descending order
+sorted_indices = np.argsort(eigenvalues)[::-1]
+eigenvalues = eigenvalues[sorted_indices]
+eigenvectors = eigenvectors[:, sorted_indices]
+
+print("\nEigenvalue Decomposition Results:")
+print("Eigenvalues:\n", eigenvalues)
+print("Eigenvectors (sorted by eigenvalues):\n", eigenvectors)
+
+# 3. Comparison between V from SVD and eigenvectors of M^T M
+print("\nComparison of V from SVD and Eigenvectors of M^T M:")
+print("V (from SVD):\n", VT.T)
+print("Eigenvectors of M^T M:\n", eigenvectors)
+
+# 4. Relationship between singular values and eigenvalues
+singular_values_squared = Sigma**2
+print("\nRelationship between singular values and eigenvalues:")
+print("Singular Values Squared:\n", singular_values_squared)
+print("Eigenvalues of M^T M:\n", eigenvalues)
